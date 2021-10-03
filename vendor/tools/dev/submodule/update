@@ -1,0 +1,3 @@
+#!/bin/sh
+# リポジトリ内のサブモジュールを一括で更新する。
+git submodule foreach git pull origin master;

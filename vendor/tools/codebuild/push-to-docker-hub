@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#
+# イメージを Docker Hub へプッシュする
+#
+# @example
+# $ push-to-docker-hub Project
+#
+
+set -e;
+
+TARGET="${1}";
+
+if trigger is release ?; then
+  docker build -t "${DOCKER_HUB_USERNAME}/${TARGET}:latest" .;
+  docker push "${DOCKER_HUB_USERNAME}/${TARGET}:latest";
+  docker build -t "${DOCKER_HUB_USERNAME}/${TARGET}:${CODEBUILD_WEBHOOK_TRIGGER#tag/}" .;
+  docker push "${DOCKER_HUB_USERNAME}/${TARGET}:${CODEBUILD_WEBHOOK_TRIGGER#tag/}";
+fi;

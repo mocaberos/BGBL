@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Gitの履歴から指定したコミットIDを検出する
+#
+# @example チェックアウトされているコミットIDを検出する
+# $ detect-commit --current
+#
+# @example チェックアウトされているコミットの分岐元コミットIDを検出する
+# $ detect-commit --base
+#
+
+set -e;
+
+case "$1" in
+  "--base")
+    if [ "${CODEBUILD_WEBHOOK_PREV_COMMIT}" != "" ]; then
+      echo "${CODEBUILD_WEBHOOK_PREV_COMMIT}";
+    else
+      git rev-parse master;
+    fi;
+    ;;
+  "--current")
+    git rev-parse HEAD;
+    ;;
+  *)
+    echo -e "\nInvalid arguments\nUsage: detect-commit (--current|--base)\n";
+    exit 1;
+    ;;
+esac;

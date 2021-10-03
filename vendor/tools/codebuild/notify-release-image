@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# ECRへプッシュ時にCIがエラーかどうか判定してSlackに通知
+#
+# @example
+# $ notify-release-image Project
+#
+
+set -e;
+
+TARGET="${1}";
+
+if trigger is release ?; then
+  if result is success ?; then
+    notify "*[成功]* <!here> ${TARGET} v${CODEBUILD_WEBHOOK_TRIGGER#tag/} を *ECRにプッシュしました*"
+  else
+    notify "*[失敗]* <!here> ${TARGET} ${CODEBUILD_WEBHOOK_TRIGGER#tag/} を *ECRへプッシュできません* でした *:scream::gun::japanese_ogre:* 早く治して"
+  fi;
+fi;

@@ -1,0 +1,256 @@
+# Gemfile
+# group :development, :test do
+#   gem 'rubocop',             require: false
+#   gem 'rubocop-performance', require: false
+#   gem 'rubocop-rails',       require: false
+#   gem 'rubocop-rspec',       require: false
+# end
+#
+# inherit_from: ./vendor/tools/config/rubocop.yml
+#
+
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
+# Rails用
+Rails:
+  Enabled: true
+
+# spec 内では
+# expect { subject }.to change { foo }
+# という書き方をよく行うので () を省略したい。
+# { foo } は明らかに change に紐付く。
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*_spec.rb"
+
+# 次のようなケースがあるので、このルールをfalseにする
+# - 同名のメソッドがある場合にローカル変数に `_` を付ける
+# - 一時変数として `_` を付ける
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+# 空のwhenを書けた方が表現力が高い。また、次のようなケースで利用したい。
+# case foo
+# when 42
+#   # nop
+# when 1..100
+#   ...
+# end
+Lint/EmptyWhen:
+  Enabled: false
+
+# 日本語コメントの許可
+Style/AsciiComments:
+  Enabled: false
+
+# クラスやメソッド定義の行にコメントを書くことを許可
+Style/CommentedKeyword:
+  Enabled: false
+
+# 数値の区切りを強制しない
+Style/NumericLiterals:
+  Enabled: false
+
+# モジュールのネスト強制を無効化
+# @note 定義するモジュールはネスト、所属するモジュールはフラットに書きたい
+# @example
+# module Hoges::Fugas
+#   class Piyo
+#   end
+# end
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# 文字列リテラルfrozen強制を解除
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# コードを揃えるためのスペースを許可
+Layout/SpaceAroundOperators:
+  AllowForAlignment: true
+
+# コードを揃えるためのスペースを許可
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+
+# 配列のインデントスタイルを指定
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+# ハッシュのインデントスタイルを指定
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+# ハッシュの垂直調整スタイルを指定
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+# メソッド長のしきい値を調整
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/tasks/helpers/test_data_helper.rb' # テストデータ定義
+  Max: 50
+
+# コードの複雑さ判定(ABC)のしきい値を調整
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/tasks/helpers/test_data_helper.rb' # テストデータ定義
+  Max: 50
+
+# ブロック長警告を無効にするメソッドを指定
+Metrics/BlockLength:
+  Exclude:
+    - 'app/admin/**/*'                        # ActiveAdminのDSL
+    - 'app/libs/admins/components/**/*'       # ActiveAdminのコンポーネントDSL
+    - 'spec/**/*'                             # RspecのDSL
+    - 'db/**/*'                               # データベース定義
+    - 'lib/tasks/helpers/test_data_helper.rb' # テストデータ定義
+    - '*.gemspec'                             # Gem定義
+  IgnoredMethods:
+    - 'configure'
+    - 'class_eval'
+    - 'extended'
+    - 'helpers'
+    - 'included'
+    - 'instance_eval'
+    - 'namespace'
+    - 'resource'
+    - 'resources'
+    - 'route_param'
+    - 'transaction'
+    - 'class_methods'
+
+# ファイルパスのチェックを無効化
+Rails/FilePath:
+  Enabled: false
+
+# Gemの並び順を強制しない
+Bundler/OrderedGems:
+  Enabled: false
+
+# 1行あたりの長さを制限
+Layout/LineLength:
+  Max: 140
+  Exclude:
+    - 'app/admin/**/*'                  # ActiveAdminのDSL
+    - 'app/libs/admins/components/**/*' # ActiveAdminのコンポーネントDSL
+  IgnoredPatterns:
+    - "'.+'"                                                               # 文字リテラルが含まれる行
+    - '".+"'                                                               # 文字リテラルが含まれる行
+    - '#.+'                                                                # コメントが含まれる行
+    - '/.+/'                                                               # 正規表現が含まれる行
+    - '([A-Z][A-Za-z\d]+::){2,}[A-Z]'                                      # モジュール名が3つ以上含まれる行
+    - '([A-Z]+_){4,}[A-Z]'                                                 # 長い定数が含まれる行
+    - '\s+(has_one|has_many|belongs_to|validate|validates|delegate)\s+:.+' # モデル定義DSL
+    - '\s+(indexes)\s+:.+'                                                 # ESのスキーマ定義DSL
+    - '(^|\s+)def [^\(]+\(.+\)'                                            # 引数付きのメソッドが定義されている行
+
+# 可読性の低い命名の禁止ルールから特定の命名を除外
+Naming/MethodParameterName:
+  AllowedNames:
+    - x
+    - y
+    - w
+    - h
+    - id
+    - ip
+    - to
+    - at
+
+# キーワード引数をパラメータ数制限から除外
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+# any_instanceの使用を許可する
+RSpec/AnyInstance:
+  Enabled: false
+
+# ファイルパスのチェックを無効化
+RSpec/FilePath:
+  Enabled: false
+
+# contextのprefixチェックを無効化
+RSpec/ContextWording:
+  Enabled: false
+
+# described_classを使用するよう設定
+RSpec/DescribedClass:
+  EnforcedStyle: described_class
+
+# itの長さチェックを無効化
+RSpec/ExampleLength:
+  Enabled: false
+
+# before, around, afterの each を明示させるよう設定
+RSpec/HookArgument:
+  EnforcedStyle: each
+
+# expect記法に統一、should記法を許可しない
+RSpec/ImplicitExpect:
+  EnforcedStyle: is_expected
+
+# 暗黙的な subject の使用を許可しない
+RSpec/ImplicitSubject:
+  EnforcedStyle: disallow
+
+# 繰り返し処理の中で expect の使用を許可する
+RSpec/IteratedExpectation:
+  Enabled: false
+
+# インスタンス変数の使用禁止設定を調整する
+RSpec/InstanceVariable:
+  AssignmentOnly: true
+
+# receive_message_chain の使用を許可する
+RSpec/MessageChain:
+  Enabled: false
+
+# spyの記法を 'receive' に統一
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+# itの中に複数のexpectを書くことを許可する
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# `let` で定義できる遅延評価変数の最大値を変更する
+RSpec/MultipleMemoizedHelpers:
+  Max: 20
+
+# subjectの命名強制を無効化
+RSpec/NamedSubject:
+  Enabled: false
+
+# ネストの深さを制限
+RSpec/NestedGroups:
+  Max: 8
+
+# let! の使用を許可する
+RSpec/LetSetup:
+  Enabled: false
+
+# instance_doubleを推奨する警告を無効化
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+# マイグレーションファイルを除外
+Style/Documentation:
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'

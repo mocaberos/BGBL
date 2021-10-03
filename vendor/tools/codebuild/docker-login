@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Dockerリポジトリにログインするコマンド
+#
+# @optional 省略可能な実行引数一覧
+#     --skip-ecr ECRログインを行わない
+
+set -e;
+
+ECR_LOGIN=true;
+
+while [ $# -gt 0 ]
+do
+  case "$1" in
+    "--skip-ecr") ECR_LOGIN=false;;
+  esac
+  shift
+done
+
+if [ "${DOCKER_HUB_USERNAME}" = "" ] || [ "${DOCKER_HUB_PASSWORD}" = "" ]; then
+  echo "[ERROR] You must set environment values (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD)."
+  exit 1
+fi
+
+# Docker Hub
+docker login --username "$DOCKER_HUB_USERNAME" --password "$DOCKER_HUB_PASSWORD";
+
+# ECR
+if "${ECR_LOGIN}"; then
+  account_id=$(aws-id);
+  aws ecr get-login-password | docker login --username AWS --password-stdin "https://$account_id.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com";
+fi

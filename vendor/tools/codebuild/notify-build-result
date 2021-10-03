@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# CodeBuildのCIテストの結果をSlackに通知する
+#
+# @example
+# $ notify-build-result Project
+#
+
+set -e;
+
+TARGET="${1}";
+
+if ! trigger is release ?; then
+  if trigger is pr ?; then
+    if result is success ?; then
+      notify "*[成功]* <!here> ${TARGET} <${CODEBUILD_SOURCE_REPO_URL:0:-4}/pull${CODEBUILD_WEBHOOK_TRIGGER:2}|PR #${CODEBUILD_WEBHOOK_TRIGGER:2}> のテストが成功しました:man-gesturing-ok:\nテスト結果：`result-url $TARGET`"
+    else
+      notify "*[失敗]* <!here> ${TARGET} <${CODEBUILD_SOURCE_REPO_URL:0:-4}/pull${CODEBUILD_WEBHOOK_TRIGGER:2}|PR #${CODEBUILD_WEBHOOK_TRIGGER:2}> のテストが失敗しました:man-gesturing-no:\nテスト結果：`result-url $TARGET`"
+    fi;
+  else
+    if result is success ?; then
+      notify "*[成功]* <!here> ${TARGET} ${CODEBUILD_WEBHOOK_TRIGGER:-none} のテストが成功しました:man-gesturing-ok:\nテスト結果：`result-url $TARGET`"
+    else
+      notify "*[失敗]* <!here> ${TARGET} ${CODEBUILD_WEBHOOK_TRIGGER:-none} のテストが失敗しました:man-gesturing-no:\nテスト結果：`result-url $TARGET`"
+    fi;
+  fi;
+fi;

@@ -1,0 +1,12 @@
+development:
+  adapter: redis
+  url: <%= ENV.fetch("BGBL_REDIS_URL") { "redis://@127.0.0.1:6379/0" } %>
+  channel_prefix: <%= ENV.fetch("BGBL_CABLE_REDIS_PREFIX") { "bgbl_cable" } %>
+
+test:
+  adapter: test
+
+production:
+  adapter: redis
+  url: <%= ENV.fetch("BGBL_REDIS_URL") { "redis://@127.0.0.1:6379/0" } %>
+  channel_prefix: <%= ENV.fetch("BGBL_CABLE_REDIS_PREFIX") { "bgbl_cable" } %>

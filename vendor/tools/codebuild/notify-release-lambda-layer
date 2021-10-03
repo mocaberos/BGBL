@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# AWS Lambda Layer デプロイ時にCIがエラーかどうか判定してSlackに通知
+#
+# @example
+# $ notify-update-lambda-layer Project
+#
+
+set -e;
+
+TARGET="${1}";
+
+if trigger is merge master ?; then
+  if result is success ?; then
+    notify "*[成功]* <!here> AWS Lambda Layer ${TARGET} をデプロイしました。"
+  else
+    notify "*[失敗]* <!here> AWS Lambda Layer ${TARGET} をデプロイできませんでした。 *:scream::gun::japanese_ogre:* 早く治して"
+  fi;
+fi;

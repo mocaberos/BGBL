@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+#
+# 指定した名前のlambdaレイヤーの最新バージョン番号を取得
+# @example
+# $ get-latest-layer-version LayerName
+#
+
+from json import loads
+from subprocess import check_output
+from sys import argv
+
+cmd = f'aws lambda list-layer-versions --layer-name {argv[1]}'
+res = check_output(cmd, shell=True)
+version_info = loads(res)
+print(version_info['LayerVersions'][0]['Version'])

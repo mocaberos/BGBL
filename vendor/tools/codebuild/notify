@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# 環境変数で指定された通知先に通知を送信する
+#
+# @example
+# $ export SLACK_WEBHOOK_URL="https://localhost/dummy"
+# $ notify HogeHoge
+#
+
+set -e;
+
+MESSAGE="${1}";
+
+if [ "${SLACK_WEBHOOK_URL}" != "" ]; then
+  curl -X POST --data-urlencode "payload={\"text\":\"${MESSAGE}\"}" "${SLACK_WEBHOOK_URL}"
+fi;

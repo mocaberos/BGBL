@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# CodeBuildの実行環境変数を元にビルド結果を判定する
+# @note `post_build` でのみ使用可能
+#
+# @example
+# $ if result is success ?; then
+# $ if result is failure ?; then
+#
+
+set -e;
+
+if [ "$#" -ne "3" -a "$#" -ne "4" ]; then
+  echo "\nInvalid arguments\nUsage: result is (success|failure) ? \n";
+  exit 1;
+fi;
+
+if [ "$2" = "success" ]; then
+  if [ "${CODEBUILD_BUILD_SUCCEEDING:-none}" == "1" ]; then
+    exit 0;
+  fi;
+fi;
+
+if [ "$2" = "failure" ]; then
+  if [ "${CODEBUILD_BUILD_SUCCEEDING:-none}" == "0" ]; then
+    exit 0;
+  fi;
+fi;
+
+exit 1;

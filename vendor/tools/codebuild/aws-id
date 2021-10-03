@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# AWSのIDを取得する
+#
+
+set -e;
+
+aws sts get-caller-identity --query 'Account' --output text;

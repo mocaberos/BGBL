@@ -1,4 +1,4 @@
-FROM 085041388644.dkr.ecr.ap-northeast-1.amazonaws.com/rails-docker-image:0.0.15
+FROM mocaberos/rails-docker-image:0.0.15
 
 # environment
 ENV TZ='Asia/Tokyo'

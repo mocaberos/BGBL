@@ -1,0 +1,46 @@
+# Ignore environment file
+.env
+
+# Ignore git history
+.git/
+
+# Ignore bundler config.
+.bundle
+
+# Ignore the default SQLite database.
+db/*.sqlite3
+db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+log/*
+tmp/*
+!log/.keep
+!tmp/.keep
+
+# Ignore uploaded files in development
+storage/*
+!storage/.keep
+
+node_modules
+yarn-error.log
+
+public/assets
+public/minio
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+config/master.key
+vendor/bundle
+
+# Ignore docker data directory
+docker/.data/
+
+# Ignore coverage data
+coverage/
+
+# Ignore yard document
+.yardoc/
+doc/
+
+# Ignore rubocop.yml swap file
+.rubocop-*-swp-*-yml

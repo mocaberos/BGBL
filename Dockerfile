@@ -1,4 +1,4 @@
-FROM mocaberos/rails-docker-image:0.0.15
+FROM mocaberos/rails-docker-image:0.0.17
 
 # environment
 ENV TZ='Asia/Tokyo'

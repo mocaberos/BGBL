@@ -51,9 +51,12 @@ bundle exec rake assets:precompile;
 
 # nginx
 echo 'Running nginx';
-rm -rf /etc/nginx
-cp -r ./docker/nginx /etc/nginx
+cp -r ./docker/nginx/* /etc/nginx/;
 nginx;
+
+rm -rf /var/log/docker.container.log;
+mkfifo /var/log/docker.container.log;
+(while cat /var/log/docker.container.log; do :; done &)
 
 # rails
 echo 'bundle exec rails s -b 0.0.0.0 --no-log-to-stdout';

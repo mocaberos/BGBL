@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./normalize.css">
+    <style>
+        .btn-square-pop {
+            position: relative;
+            display: inline-block;
+            padding: 0.25em 0.5em;
+            text-decoration: none;
+            color: #FFF;
+            background: #fd9535;
+            border-bottom: solid 2px #d27d00;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+            font-weight: bold;
+        }
+
+        .btn-square-pop:active {
+            border-bottom: solid 2px #fd9535;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+        }
+    </style>
+    <title>BGBL</title>
+</head>
+<body>
+<div style="text-align:center; margin-top: 200px;">
+    <a style="font-size: 2em;" href="#" class="btn-square-pop" onclick="start()">开始</a>
+</div>
+<script>
+    function start() {
+        let master = window.prompt('请输入房主名称');
+        fetch('http://127.0.0.1:1190/bgbl/api/v1/game/new', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({master_user: master})
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+           console.log(`成功创建房间：${data['id']}`);
+            window.location.href = `http://127.0.0.1:1190/game.html?room-id=${data['id']}&user=${master}`
+        });
+    }
+</script>
+</body>
+</html>

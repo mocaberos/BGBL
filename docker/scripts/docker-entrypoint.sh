@@ -59,5 +59,5 @@ mkfifo /var/log/docker.container.log;
 (while cat /var/log/docker.container.log; do :; done &)
 
 # rails
-echo 'bundle exec rails s -b 0.0.0.0 --no-log-to-stdout';
-bundle exec rails s -b 0.0.0.0 --no-log-to-stdout;
+echo 'bundle exec rails s --no-log-to-stdout';
+bundle exec rails s --no-log-to-stdout;

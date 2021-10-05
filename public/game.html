@@ -107,7 +107,7 @@
                     body: JSON.stringify({room_id: this.room, user_name: newUser})
                 }).then((res) => {
                     if (res.status >= 200 && res.status < 300) {
-                        alert(`/game.html?room-id=${this.room}&user=${newUser}`)
+                        alert(`http://47.93.4.46:1190/game.html?room-id=${this.room}&user=${newUser}`)
                     } else {
                         alert('添加玩家失败');
                     }

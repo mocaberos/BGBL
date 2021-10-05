@@ -76,7 +76,7 @@
                 if (this.user == null || this.room == null) {
                     return null;
                 }
-                fetch('http://127.0.0.1:1190/bgbl/api/v1/game/info', {
+                fetch('/bgbl/api/v1/game/info', {
                     method: 'POST',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({room_id: this.room})
@@ -101,14 +101,13 @@
             },
             addUser: function () {
                 let newUser = window.prompt('请输入玩家名称');
-                fetch('http://127.0.0.1:1190/bgbl/api/v1/game/add', {
+                fetch('/bgbl/api/v1/game/add', {
                     method: 'POST',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({room_id: this.room, user_name: newUser})
                 }).then((res) => {
                     if (res.status >= 200 && res.status < 300) {
-                        // alert('添加玩家成功');
-                        alert(`http://127.0.0.1:1190/game.html?room-id=${this.room}&user=${newUser}`)
+                        alert(`/game.html?room-id=${this.room}&user=${newUser}`)
                     } else {
                         alert('添加玩家失败');
                     }
@@ -123,7 +122,7 @@
                 return null;
             },
             shuffle: function () {
-                fetch('http://127.0.0.1:1190/bgbl/api/v1/game/shuffle', {
+                fetch('/bgbl/api/v1/game/shuffle', {
                     method: 'POST',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({room_id: this.room})
@@ -139,7 +138,7 @@
                 if (!this.isMaster) {
                     return null;
                 }
-                fetch('http://127.0.0.1:1190/bgbl/api/v1/game/open', {
+                fetch('/bgbl/api/v1/game/open', {
                     method: 'POST',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({room_id: this.room, user_name: name})
@@ -155,7 +154,7 @@
                 if (!this.isMaster) {
                     return null;
                 }
-                fetch('http://127.0.0.1:1190/bgbl/api/v1/game/close', {
+                fetch('/bgbl/api/v1/game/close', {
                     method: 'POST',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({room_id: this.room, user_name: name})

@@ -34,7 +34,7 @@
 <script>
     function start() {
         let master = window.prompt('请输入房主名称');
-        fetch('http://127.0.0.1:1190/bgbl/api/v1/game/new', {
+        fetch('/bgbl/api/v1/game/new', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({master_user: master})
@@ -42,7 +42,7 @@
             return res.json();
         }).then((data) => {
            console.log(`成功创建房间：${data['id']}`);
-            window.location.href = `http://127.0.0.1:1190/game.html?room-id=${data['id']}&user=${master}`
+            window.location.href = `/game.html?room-id=${data['id']}&user=${master}`
         });
     }
 </script>

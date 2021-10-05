@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 
 set -e;
+
+# ログを正しく出力するため
+rm -rf /var/log/docker.container.log;
+mkfifo /var/log/docker.container.log;
+(while cat /var/log/docker.container.log; do :; done &)
+
 echo 'Running docker-entrypoint.sh';
 
 SKIP_DB=false
@@ -53,10 +59,6 @@ bundle exec rake assets:precompile;
 echo 'Running nginx';
 cp -r ./docker/nginx/* /etc/nginx/;
 nginx;
-
-rm -rf /var/log/docker.container.log;
-mkfifo /var/log/docker.container.log;
-(while cat /var/log/docker.container.log; do :; done &)
 
 # rails
 echo 'bundle exec rails s --no-log-to-stdout';

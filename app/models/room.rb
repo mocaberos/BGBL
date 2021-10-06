@@ -44,7 +44,7 @@ class Room < ApplicationRecord
     # @param  [String] room_id ルームID
     # @return [Array] ゲーム状況
     def game_info(room_id)
-      Room.where(room_id: room_id).map do |user|
+      Room.where(room_id: room_id).order(id: :asc).map do |user|
         {
           user_name:   user.user_name,
           card_number: user.card_number,

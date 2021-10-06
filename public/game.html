@@ -37,19 +37,20 @@
     <div style="margin-top: 100px; display: flex; flex-wrap: wrap;">
         <div v-for="u in users">
             <div v-if="!u.show">
-                <p v-if="u.user_name == user || isMaster" style="text-align: center; font-size: 1.2em; color: gray; font-family: sans-serif; font-weight: bold"> {{ u.card_number }} </p>
-                <p v-if="!(u.user_name == user || isMaster)" style="text-align: center; font-size: 1.2em; color: rgba(255, 255, 255, 0); font-family: sans-serif; font-weight: bold"> 0 </p>
+                <p v-if="u.user_name == user" style="margin: 0; padding: 0; text-align: center; font-size: 1.5em; color: lightblue; font-family: sans-serif; font-weight: bold">MY NUMBER:  {{ u.card_number }} </p>
+                <p v-if="!(u.user_name == user)" style="margin: 0; padding: 0; text-align: center; font-size: 1.5em; color: rgba(255, 255, 255, 0); font-family: sans-serif; font-weight: bold"> 0 </p>
                 <div style="margin: 0; padding: 0; width: 200px; height: 200px;">
                     <img v-on:click="openCard(u.user_name)" src="0.png" alt="" style="width: 200px; height:200px">
                 </div>
                 <p style="margin: 5px; background-color: lightblue; color: white; font-size: 1.2em; font-family: sans-serif; font-weight: bold; text-align: center; display: block; border-radius: 100vh;">{{ u.user_name }}</p>
             </div>
             <div v-if="u.show">
-                <p v-if="u.user_name == user || isMaster" style="text-align: center; font-size: 1.2em; color: gray; font-family: sans-serif; font-weight: bold"> {{ u.card_number }} </p>
-                <p v-if="!(u.user_name == user || isMaster)" style="text-align: center; font-size: 1.2em; color: rgba(255, 255, 255, 0); font-family: sans-serif; font-weight: bold"> 0 </p>
+                <p v-if="u.user_name == user" style="margin: 0; padding: 0; text-align: center; font-size: 1.5em; color: lightblue; font-family: sans-serif; font-weight: bold">MY NUMBER:  {{ u.card_number }} </p>
+                <p v-if="!(u.user_name == user)" style="margin: 0; padding: 0; text-align: center; font-size: 1.5em; color: rgba(255, 255, 255, 0); font-family: sans-serif; font-weight: bold"> 0 </p>
                 <div v-on:click="closeCard(u.user_name)" style="margin: 0; padding: 0; width: 200px; height: 200px; position: relative;">
                     <img src="1.png" alt="" style="width: 200px; height:200px">
-                    <p v-if="u.card_number >= 10" style="position: absolute; top: 35px; left: 35px; font-size: 7em; font-family: sans-serif; font-weight: bold; margin: 0; padding: 0; color: #2B6EA1">{{ u.card_number }}</p>
+                    <p v-if="u.card_number >= 100" style="position: absolute; top: 50px; left: 24px; font-size: 5.5em; font-family: sans-serif; font-weight: bold; margin: 0; padding: 0; color: #2B6EA1">{{ u.card_number }}</p>
+                    <p v-if="u.card_number >= 10 && u.card_number < 100" style="position: absolute; top: 35px; left: 35px; font-size: 7em; font-family: sans-serif; font-weight: bold; margin: 0; padding: 0; color: #2B6EA1">{{ u.card_number }}</p>
                     <p v-if="u.card_number < 10" style="position: absolute; top: 35px; left: 70px; font-size: 7em; font-family: sans-serif; font-weight: bold; margin: 0; padding: 0; color: #2B6EA1">{{ u.card_number }}</p>
                 </div>
                 <p style="margin: 5px; background-color: lightblue; color: white; font-size: 1.2em; font-family: sans-serif; font-weight: bold; text-align: center; display: block; border-radius: 100vh;">{{ u.user_name }}</p>
